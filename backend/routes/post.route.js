@@ -14,4 +14,9 @@ router.put("/update-post/:postId", postController.updatePost);
 
 router.delete("/delete-post/:postId", postController.deletePost);
 
+// Additional routes for handling like operations
+router.put("/increase-likes/:postId", postController.increaseLikes);
+
+router.put("/decrease-likes/:postId", postController.decreaseLikes);
+
 export default router;

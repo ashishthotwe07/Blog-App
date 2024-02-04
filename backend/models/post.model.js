@@ -6,6 +6,10 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  category: {
+    type: String,
+    required: true,
+  },
   content: {
     type: String,
     required: true,
@@ -16,7 +20,7 @@ const postSchema = new mongoose.Schema({
   },
   image: {
     type: String, // Assuming the image will be stored as a URL
-    required: true,
+    
   },
   createdAt: {
     type: Date,
