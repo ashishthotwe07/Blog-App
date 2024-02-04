@@ -1,7 +1,12 @@
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
+import Navbar from "./Components/Navbar";
 
 function App() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+  const routes = createBrowserRouter([
+    { path: "/", element: <Navbar></Navbar> },
+  ]);
+  return <RouterProvider router={routes}></RouterProvider>;
 }
 
 export default App;
