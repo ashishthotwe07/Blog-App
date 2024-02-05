@@ -3,35 +3,24 @@ import { useSelector } from "react-redux";
 import { postsSelector } from "../Redux/Reducers/PostSlice";
 import { Link } from "react-router-dom";
 
-const Home = () => {
+const Categories = () => {
   const { posts } = useSelector(postsSelector);
 
-  // Function to get the first 5 recent posts
-  const getRecentPosts = () => {
-    return posts.slice(0, 5); // Adjust the number as per your requirement
-  };
+  // Group posts by category
+  const categorizedPosts = posts.reduce((acc, post) => {
+    acc[post.category] = [...(acc[post.category] || []), post];
+    return acc;
+  }, {});
 
   return (
-    <div>
-      <div className="hero-section bg-gray-900 text-white py-20">
-        {" "}
-        {/* Changed background color to gray-900 */}
-        <div className="container mx-auto text-center">
-          <h1 className="text-4xl font-bold mb-4">Welcome to My Blog</h1>
-          <p className="text-lg mb-8">
-            I write about Software Development, Biotechnology, and
-            Bioinformatics. Explore my articles to learn more!
-          </p>
-        </div>
-      </div>
-
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4 mb-12">
-        <article>
-          <h2 className="text-2xl font-extrabold text-gray-900">
-            RECENT BLOGS
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4 mb-12">
+      {Object.keys(categorizedPosts).map((category) => (
+        <div key={category}>
+          <h2 className="text-2xl font-extrabold text-gray-900 mb-4">
+            {category.toUpperCase()}
           </h2>
           <section className="mt-6 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-x-6 gap-y-8">
-            {getRecentPosts().map((post) => (
+            {categorizedPosts[category].map((post) => (
               <article
                 key={post.id}
                 className="relative w-full h-64 bg-cover bg-center group rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 ease-in-out"
@@ -54,10 +43,10 @@ const Home = () => {
               </article>
             ))}
           </section>
-        </article>
-      </section>
+        </div>
+      ))}
     </div>
   );
 };
 
-export default Home;
+export default Categories;

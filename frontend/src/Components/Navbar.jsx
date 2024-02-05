@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
 import { fetchPosts } from "../Redux/Reducers/PostSlice";
+import Footer from "./Footer";
 
 export default function Navbar() {
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchPosts());
@@ -21,41 +23,85 @@ export default function Navbar() {
             </span>
           </div>
 
+          {/* Toggle Button (for small screens) */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-white focus:outline-none"
+            >
+              {isOpen ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16m-7 6h7"
+                  />
+                </svg>
+              )}
+            </button>
+          </div>
+
           {/* Navigation Links */}
-          <ul className="flex space-x-4">
+          <ul
+            className={`md:flex md:space-x-4 ${
+              isOpen ? "flex flex-col" : "hidden"
+            } md:items-center`}
+          >
             <li>
-              <Link to="/" className="text-white hover:text-gray-300">
+              <Link
+                to="/"
+                className="text-white hover:text-gray-300"
+                onClick={() => setIsOpen(false)}
+              >
                 Home
               </Link>
             </li>
             <li>
-              <Link to="/categories" className="text-white hover:text-gray-300">
+              <Link
+                to="/categories"
+                className="text-white hover:text-gray-300"
+                onClick={() => setIsOpen(false)}
+              >
                 Categories
               </Link>
             </li>
+
             <li>
-              <Link to="/archives" className="text-white hover:text-gray-300">
-                Archives
-              </Link>
-            </li>
-            <li>
-              <Link to="/about" className="text-white hover:text-gray-300">
+              <Link
+                to="/about"
+                className="text-white hover:text-gray-300"
+                onClick={() => setIsOpen(false)}
+              >
                 About
               </Link>
             </li>
           </ul>
-
-          {/* Search Bar */}
-          <div>
-            <input
-              type="text"
-              placeholder="Search"
-              className="px-4 py-2 rounded bg-gray-700 text-white focus:outline-none focus:bg-gray-600"
-            />
-          </div>
         </div>
       </nav>
-      <Outlet></Outlet>
+      <Outlet />
+      <Footer />
     </>
   );
 }

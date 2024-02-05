@@ -16,7 +16,7 @@ class PostController {
       const post = await Post.create(req.body);
       res.json(post);
     } catch (error) {
-      console.error("Error creating post:", error);
+      console.error("Error in creating post:", error);
       res.status(500).json({ message: "Internal server error" });
     }
   }

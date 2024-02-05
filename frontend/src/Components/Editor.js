@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { EditorState, convertToRaw } from "draft-js";
+import { EditorState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { useDispatch } from "react-redux";
+import { createPost } from "../Redux/Reducers/PostSlice";
 
-const MyRichTextEditor = () => {
+const MyPlainTextEditor = () => {
+  const dispatch = useDispatch();
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
@@ -28,38 +29,18 @@ const MyRichTextEditor = () => {
     });
   };
 
-  const uploadImageCallBack = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        // Replace this with your actual upload logic
-        resolve({ data: { link: event.target.result } });
-      };
-      reader.readAsDataURL(file);
-    });
-  };
-
-  const renderBlock = (contentBlock) => {
-    const type = contentBlock.getType();
-    if (type === "code-block") {
-      const rawData = convertToRaw(contentBlock);
-      const code = rawData.blocks.map((block) => block.text).join("\n");
-      return (
-        <SyntaxHighlighter language="javascript" style={vscDarkPlus}>
-          {code}
-        </SyntaxHighlighter>
-      );
-    }
-    return null;
-  };
-
   const handleSubmit = () => {
+    const content = editorState.getCurrentContent().getPlainText();
+
+    // Including title, category, author, and content (plain text) in postData
     const postData = {
-      ...formData,
-      content: convertToRaw(editorState.getCurrentContent()),
+      title: formData.title,
+      category: formData.category,
+      author: formData.author,
+      content: content,
     };
-    console.log("Post Data:", postData);
-    // Add logic here to send the postData to the server
+
+    dispatch(createPost(postData));
   };
 
   return (
@@ -96,7 +77,6 @@ const MyRichTextEditor = () => {
         toolbar={{
           options: [
             "inline",
-            "blockType",
             "fontSize",
             "fontFamily",
             "list",
@@ -108,12 +88,7 @@ const MyRichTextEditor = () => {
             "remove",
             "history",
           ],
-          image: {
-            uploadCallback: uploadImageCallBack,
-            alt: { present: true, mandatory: true },
-          },
         }}
-        customBlockRenderFunc={renderBlock}
       />
       <button
         className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
@@ -125,4 +100,4 @@ const MyRichTextEditor = () => {
   );
 };
 
-export default MyRichTextEditor;
+export default MyPlainTextEditor;

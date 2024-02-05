@@ -8,7 +8,7 @@ const postSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    required: true,
+    default: "Uncategorized",
   },
   content: {
     type: String,
@@ -19,8 +19,9 @@ const postSchema = new mongoose.Schema({
     required: true,
   },
   image: {
-    type: String, // Assuming the image will be stored as a URL
-    
+    type: String,
+    default:
+      "https://www.hostinger.com/tutorials/wp-content/uploads/sites/2/2021/09/how-to-write-a-blog-post.png",
   },
   createdAt: {
     type: Date,
