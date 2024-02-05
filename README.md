@@ -38,7 +38,6 @@ The Personal Blog App is a full-stack web application built using the MERN (Mong
    ```
 3. Install backend dependencies.
    ```
-   cd backend
    npm install
    ```
 4. Start the backend server.
