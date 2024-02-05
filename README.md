@@ -30,7 +30,7 @@ The Personal Blog App is a full-stack web application built using the MERN (Mong
 ### Installation
 1. Clone the repository to your local machine.
    ```
-   git clone https://github.com/your-username/personal-blog-app.git
+   git clone https://github.com/ashishthotwe07/blog-app-No-Auth.git
    ```
 2. Navigate to the project directory.
    ```
