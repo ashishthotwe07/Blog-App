@@ -5,7 +5,9 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon backend/server.js"
+    "dev":"nodemon backend/server.js",
+    "start": "nodemon backend/server.js",
+    "build":"npm i && npm i --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +15,7 @@
   "dependencies": {
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.1",
     "express": "^4.18.2",
     "flowbite-react": "^0.7.2",
     "mongoose": "^8.1.1",
