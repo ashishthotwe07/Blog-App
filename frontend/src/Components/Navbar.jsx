@@ -1,107 +1,134 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link, Outlet } from "react-router-dom";
-import { fetchPosts } from "../Redux/Reducers/PostSlice";
+import React, { useState, useEffect } from "react";
 import Footer from "./Footer";
+import { Link, Outlet } from "react-router-dom";
 
-export default function Navbar() {
-  const dispatch = useDispatch();
-  const [isOpen, setIsOpen] = useState(false);
+const Navbar = () => {
+  const [showLinks, setShowLinks] = useState(false);
+
+  const toggleLinks = () => {
+    setShowLinks(!showLinks);
+  };
 
   useEffect(() => {
-    dispatch(fetchPosts());
-  }, [dispatch]);
+    const handleResize = () => {
+      // If the screen size is increased (to a large screen),
+      // hide the navigation links by setting showLinks to false
+      if (window.innerWidth > 768) {
+        // Change 768 to your desired breakpoint
+        setShowLinks(false);
+      }
+    };
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []); // Empty dependency array to run this effect only once on component mount
 
   return (
     <>
-      <nav className="bg-gray-800 p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          {/* Logo */}
-          <div className="text-white font-semibold text-lg">
-            <span className="text-3xl md:text-2xl lg:text-3xl font-extrabold">
-              Ashish<span className="text-blue-500">Blogs</span>
-            </span>
-          </div>
+      <div className="flex flex-wrap h-full">
+        <section className="relative mx-auto">
+          {/* Navbar */}
+          <nav className="flex justify-between bg-gray-900 text-white w-screen">
+            <div className="px-5 xl:px-12 py-6 flex w-full items-center">
+              <Link
+                to={"/"}
+                className="text-3xl font-bold font-heading"
+                href="#"
+              >
+                {/* Logo Here. */}
+                AshBlogs
+              </Link>
+              {/* Nav Links */}
+              <ul
+                className={`md:flex ${
+                  showLinks ? "flex flex-col items-baseline mr-10 " : "hidden"
+                } px-4 mx-auto font-semibold font-heading space-x-12`}
+              >
+                <li>
+                  <Link to={"/"} className="hover:text-gray-200" href="#">
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to={"/category"}
+                    className="hover:text-gray-200"
+                    href="#"
+                  >
+                    Category
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to={"/collections"}
+                    className="hover:text-gray-200"
+                    href="#"
+                  >
+                    Collections
+                  </Link>
+                </li>
+                <li>
+                  <Link to={"/about"} className="hover:text-gray-200" href="#">
+                    About
+                  </Link>
+                </li>
+              </ul>
+              {/* Header Icons */}
+              <div className="hidden xl:flex  space-x-5 items-center">
+                {/* Sign In / Register */}
+                <a className="flex items-center hover:text-gray-200" href="#">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 hover:text-gray-200"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+            {/* Responsive navbar */}
 
-          {/* Toggle Button (for small screens) */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-white focus:outline-none"
+            <a
+              className="navbar-burger self-center mr-12 md:hidden"
+              href="#"
+              onClick={toggleLinks}
             >
-              {isOpen ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16m-7 6h7"
-                  />
-                </svg>
-              )}
-            </button>
-          </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 hover:text-gray-200"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </a>
+          </nav>
+        </section>
+      </div>
 
-          {/* Navigation Links */}
-          <ul
-            className={`md:flex md:space-x-4 ${
-              isOpen ? "flex flex-col" : "hidden"
-            } md:items-center`}
-          >
-            <li>
-              <Link
-                to="/"
-                className="text-white hover:text-gray-300"
-                onClick={() => setIsOpen(false)}
-              >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/categories"
-                className="text-white hover:text-gray-300"
-                onClick={() => setIsOpen(false)}
-              >
-                Categories
-              </Link>
-            </li>
-
-            <li>
-              <Link
-                to="/about"
-                className="text-white hover:text-gray-300"
-                onClick={() => setIsOpen(false)}
-              >
-                About
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </nav>
-      <Outlet />
-      <Footer />
+      <Outlet></Outlet>
+      <Footer></Footer>
     </>
   );
-}
+};
+
+export default Navbar;

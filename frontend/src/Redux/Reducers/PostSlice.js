@@ -104,7 +104,6 @@ const PostSlice = createSlice({
       .addCase(fetchPosts.fulfilled, (state, action) => {
         state.loading = false;
         state.posts = action.payload;
-        
       })
       .addCase(fetchPosts.rejected, (state, action) => {
         state.loading = false;
@@ -184,9 +183,9 @@ const PostSlice = createSlice({
       })
       .addCase(deletePost.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action.payload)
+        console.log(action.payload);
         // Remove the deleted post from the state
-        state.posts = state.posts.filter(post => post._id !== action.payload);
+        state.posts = state.posts.filter((post) => post._id !== action.payload);
       })
       .addCase(deletePost.rejected, (state, action) => {
         state.loading = false;
