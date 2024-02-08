@@ -52,11 +52,7 @@ const Home = () => {
             <div className="relative flex flex-col justify-between h-full px-4 sm:px-6 lg:px-4">
               <div className="flex justify-between items-center mt-4">
                 <div className="flex items-center">
-                  <img
-                    className="w-8 h-8 rounded-full mr-2"
-                    src={`https://i.pravatar.cc/100?u=${post.image}`}
-                    alt={post.user}
-                  />
+          
                   <p className="text-white text-sm">{post.author}</p>
                 </div>
                 <p className="text-white text-sm">

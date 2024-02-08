@@ -70,11 +70,7 @@ const Category = () => {
             <div className="relative flex flex-col justify-between flex-1 px-4 sm:px-6 lg:px-4 py-6">
               <div className="flex justify-between items-center">
                 <div className="flex items-center">
-                  <img
-                    className="w-8 h-8 rounded-full mr-2"
-                    src={`https://i.pravatar.cc/100?u=${post.image}`}
-                    alt={post.user}
-                  />
+           
                   <p className="text-white text-sm">{post.author}</p>
                 </div>
                 <p className="text-white text-sm">
