@@ -70,7 +70,6 @@ const Category = () => {
             <div className="relative flex flex-col justify-between flex-1 px-4 sm:px-6 lg:px-4 py-6">
               <div className="flex justify-between items-center">
                 <div className="flex items-center">
-           
                   <p className="text-white text-sm">{post.author}</p>
                 </div>
                 <p className="text-white text-sm">
