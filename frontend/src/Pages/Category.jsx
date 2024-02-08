@@ -34,7 +34,7 @@ const Category = () => {
       : posts.filter((post) => post.category === selectedCategory);
 
   return (
-    <div className="container mx-auto w-4/5 py-8">
+    <div className="container mx-auto w-4/5 mb-10 py-8">
       <h1 className="text-3xl font-bold mb-4">Blog Categories</h1>
       <div className="flex justify-between flex-wrap mb-4">
         {[
@@ -78,7 +78,7 @@ const Category = () => {
                 </p>
               </div>
               <h3 className="text-white text-2xl font-bold text-center mt-4">
-                <Link className="absolute inset-0" to={`post/${post._id}`} />
+                <Link className="absolute inset-0" to={`/post/${post._id}`} />
                 {post.title}
               </h3>
               <div className="flex justify-center text-yellow-600 items-center mt-4">

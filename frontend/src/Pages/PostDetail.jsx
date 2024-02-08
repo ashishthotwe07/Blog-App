@@ -16,10 +16,14 @@ export default function PostDetail() {
   }
 
   return (
-    <div className=" mx-auto py-10">
+    <div className=" mx-auto mb-10 py-10 px-10">
       <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="w-full h-80">
-          <img className="w-full rounded h-full" src={post.image} alt={post.title} />
+          <img
+            className="w-full  rounded h-full"
+            src={post.image}
+            alt={post.title}
+          />
         </div>
 
         <div className="p-6">
