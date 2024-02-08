@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { postsSelector } from "../Redux/Reducers/PostSlice";
 
 const Home = () => {
   const [likedPosts, setLikedPosts] = useState(new Set());
+  const dispatch = useDispatch();
+
+  const { posts } = useSelector(postsSelector);
 
   const toggleLike = (postId) => {
     const updatedLikedPosts = new Set(likedPosts);
@@ -14,46 +19,28 @@ const Home = () => {
     setLikedPosts(updatedLikedPosts);
   };
 
-  const recentPosts = [
-    {
-      id: 1,
-      title: "How to Improve Your Productivity",
-      image:
-        "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg",
-      user: "John Doe",
-      likes: 15,
-      date: "2024-02-07",
-    },
-    {
-      id: 2,
-      title: "The Benefits of Meditation",
-      image:
-        "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg",
-      user: "Jane Smith",
-      likes: 10,
-      date: "2024-02-06",
-    },
-    {
-      id: 3,
-      title: "10 Tips for a Healthy Lifestyle",
-      image:
-        "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg",
-      user: "Alex Johnson",
-      likes: 20,
-      date: "2024-02-05",
-    },
-  ];
+  // Function to format timestamp to "Month Date, Year" format
+  const formatDate = (timestamp) => {
+    const options = { month: "long", day: "numeric", year: "numeric" };
+    return new Date(timestamp).toLocaleDateString(undefined, options);
+  };
+
+  // Get the latest three posts based on createdAt timestamp
+  const latestPosts = posts.slice(0, 3);
 
   return (
     <div className="container mx-auto py-12">
       <div className="text-center">
-        <h2 className="text-3xl font-bold text-gray-800">From the Blog</h2>
+        <h2 className="text-3xl font-bold text-gray-800">
+          From the Latest Blogs
+        </h2>
         <p className="text-gray-600">
-          Learn how to grow your business with our expert advice.
+          Explore the latest articles on fitness, biotechnology, bioinformatics,
+          and technology.
         </p>
       </div>
       <div className="grid grid-cols-1 m-10 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-        {recentPosts.map((post) => (
+        {latestPosts.map((post) => (
           <article
             key={post.id}
             className="relative w-full h-64 bg-cover bg-center group rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 ease-in-out"
@@ -70,29 +57,45 @@ const Home = () => {
                     src={`https://i.pravatar.cc/100?u=${post.image}`}
                     alt={post.user}
                   />
-                  <p className="text-white text-sm">{post.user}</p>
+                  <p className="text-white text-sm">{post.author}</p>
                 </div>
-                <p className="text-white text-sm">{post.date}</p>
+                <p className="text-white text-sm">
+                  {formatDate(post.createdAt)}
+                </p>
               </div>
               <h3 className="text-white text-2xl font-bold text-center">
-                <Link className="absolute inset-0" to={`post/${post.id}`} />
+                <Link className="absolute inset-0" to={`post/${post._id}`} />
                 {post.title}
               </h3>
               <div className="flex justify-center items-center mt-2">
-                <img
-                  src={
-                    likedPosts.has(post.id)
-                      ? "https://cdn-icons-png.flaticon.com/128/2550/2550290.png"
-                      : "https://cdn-icons-png.flaticon.com/128/2550/2550224.png"
-                  }
-                  alt="like"
-                  className="w-6 h-6 absolute top-52 right-10 cursor-pointer filter invert"
-                  onClick={() => toggleLike(post.id)}
-                />
+                <h5 className="w-6 h-6 absolute top-52 left-10 cursor-pointer filter invert">
+                  {post.category}
+                </h5>
               </div>
             </div>
           </article>
         ))}
+        <a
+          href="/category"
+          class="inline-flex items-center px-3 py-2 w-40 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Read more
+          <svg
+            class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 10"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M1 5h12m0 0L9 1m4 4L9 9"
+            />
+          </svg>
+        </a>
       </div>
     </div>
   );

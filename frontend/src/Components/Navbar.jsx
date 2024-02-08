@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Footer from "./Footer";
 import { Link, Outlet } from "react-router-dom";
+import { fetchPosts } from "../Redux/Reducers/PostSlice";
+import { useDispatch } from "react-redux";
 
 const Navbar = () => {
   const [showLinks, setShowLinks] = useState(false);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchPosts());
+  }, []);
 
   const toggleLinks = () => {
     setShowLinks(!showLinks);
@@ -63,15 +70,7 @@ const Navbar = () => {
                     Category
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    to={"/collections"}
-                    className="hover:text-gray-200"
-                    href="#"
-                  >
-                    Collections
-                  </Link>
-                </li>
+
                 <li>
                   <Link to={"/about"} className="hover:text-gray-200" href="#">
                     About

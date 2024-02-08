@@ -4,9 +4,9 @@ import Navbar from "./Components/Navbar";
 import "./index.css";
 import Home from "./Pages/Home";
 import Category from "./Pages/Category";
-import Collection from "./Pages/Collection";
 import About from "./Pages/About";
 import AdminDashboard from "./Pages/AdminDashboard";
+import PostDetail from "./Pages/PostDetail";
 
 export default function App() {
   const routes = createBrowserRouter([
@@ -16,7 +16,7 @@ export default function App() {
       children: [
         { index: true, element: <Home /> },
         { path: "/category", element: <Category /> },
-        { path: "/collections", element: <Collection /> },
+        { path: "/post/:id", element: <PostDetail /> },
         { path: "/about", element: <About /> },
         { path: "/admin", element: <AdminDashboard /> },
       ],

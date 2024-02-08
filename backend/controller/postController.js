@@ -37,11 +37,10 @@ class PostController {
 
       res.json(updatedPost);
     } catch (error) {
-      console.error("Error updating post:", error);
+      console.error("Error updating post here:", error);
       res.status(500).json({ message: "Internal server error" });
     }
   }
-
 
   async increaseLikes(req, res) {
     const postId = req.params.postId;

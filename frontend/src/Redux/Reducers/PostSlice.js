@@ -33,8 +33,9 @@ export const createPost = createAsyncThunk(
 // Define your async thunk for updating a post
 export const updatePost = createAsyncThunk(
   "posts/updatePost",
-  async ({ id, postData }) => {
+  async (postData) => {
     try {
+      const id = postData._id;
       const response = await axios.put(`${UPDATE_POST_URL}/${id}`, postData);
       return response.data;
     } catch (error) {
@@ -104,6 +105,7 @@ const PostSlice = createSlice({
       .addCase(fetchPosts.fulfilled, (state, action) => {
         state.loading = false;
         state.posts = action.payload;
+        console.log("fetched", action.payload);
       })
       .addCase(fetchPosts.rejected, (state, action) => {
         state.loading = false;
@@ -130,7 +132,7 @@ const PostSlice = createSlice({
       .addCase(updatePost.fulfilled, (state, action) => {
         state.loading = false;
         const updatedPostIndex = state.posts.findIndex(
-          (post) => post.id === action.payload.id
+          (post) => post._id === action.payload._id
         );
         if (updatedPostIndex !== -1) {
           state.posts[updatedPostIndex] = action.payload;
