@@ -64,8 +64,6 @@ The Personal Blog App is a full-stack web application built using the MERN (Mong
 - **Viewing Posts:** Navigate to the Home page to view a list of existing blog posts. Click on a post title to view its full content.
 - **Updating or Deleting Posts:** Admin users can edit or delete existing posts by clicking on the respective buttons in the post details view.
 
-## Contributing
-Contributions to the Personal Blog App are welcome! If you have suggestions for new features, improvements, or bug fixes, feel free to open an issue or submit a pull request.
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
